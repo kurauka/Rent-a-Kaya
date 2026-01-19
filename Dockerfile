@@ -6,16 +6,18 @@ WORKDIR /var/www/html
 # Copy application
 COPY . /var/www/html
 
-# Install system deps and PHP MySQL extensions (mysqli, pdo_mysql)
+# Install system deps and PHP MySQL + curl extensions
 RUN apt-get update \
-	&& apt-get install -y --no-install-recommends \
-	   default-mysql-client \
-	   default-libmysqlclient-dev \
-	   libzip-dev \
-	   zlib1g-dev \
-	   libxml2-dev \
-	&& docker-php-ext-install mysqli pdo pdo_mysql \
-	&& rm -rf /var/lib/apt/lists/*
+	 && apt-get install -y --no-install-recommends \
+		 ca-certificates \
+		 default-mysql-client \
+		 default-libmysqlclient-dev \
+		 libzip-dev \
+		 zlib1g-dev \
+		 libxml2-dev \
+		 libcurl4-openssl-dev \
+	 && docker-php-ext-install mysqli pdo pdo_mysql curl \
+	 && rm -rf /var/lib/apt/lists/*
 
 # Enable Apache rewrite
 RUN a2enmod rewrite
