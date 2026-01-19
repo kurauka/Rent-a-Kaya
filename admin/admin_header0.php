@@ -56,6 +56,18 @@
 
         }
     </style>
+        <style>
+        /* Override admin header to use white background and dark icons/text */
+        .navbar.navbar-default.navbar-static-top {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e5e7eb;
+            color: #111;
+        }
+        .navbar .navbar-top-links > li > a, .navbar .navbar-header .logo, .navbar .navbar-header .logo b, .navbar .navbar-top-links i {
+            color: #111 !important;
+        }
+        .navbar .navbar-header .logo b img { filter: none; }
+        </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -71,7 +83,7 @@
     </div>
     <div id="wrapper">
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top m-b-0" style="background-color: var(--kaya-accent) !important;">
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
             <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
                 <div class="top-left-part"><a class="logo" href="index.php"><b><img src="../plugins/images/mainlogo.png" style="width: 30px; height: 30px;" alt="home" /></b><span class="hidden-xs"><b>RentaKaya</b></span></a></div>
                                 <!-- Sidebar toggle (modern) -->
