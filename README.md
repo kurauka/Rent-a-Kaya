@@ -1,3 +1,24 @@
+# Rent-a-Kaya
+
+Lightweight PHP rental/property management application.
+
+## Quick start
+
+- Requirements: PHP 7.0+, MySQL, Apache/Nginx
+- Copy project files to your webroot (this repo is already structured for `www` deployment).
+- Create a MySQL database and import `database/Company.sql` or `database/client_schema.sql` as needed.
+- Update database credentials in `functions/db.php` or your local config file.
+
+## Development
+
+1. Edit files under the project root.
+2. Use your browser to visit the site (e.g., `http://localhost/rent-a-kaya`).
+
+## Security note
+This repository may contain local configuration files with credentials. Remove or secure any sensitive files before sharing publicly. I can help remove credentials from Git history if you want.
+
+## License
+See `LICENSE` file in the repository.
 # A web-based Rental House Management System
 This is a web application for Rental House Management. It was originally designed for use in administrative reccords management in 2018, and was open to the public in 2020. The original version utilized SMS for communication and MPESA for payment.
 
