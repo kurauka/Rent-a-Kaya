@@ -1,9 +1,21 @@
+
 FROM php:8.1-apache
 
 WORKDIR /var/www/html
 
 # Copy application
 COPY . /var/www/html
+
+# Install system deps and PHP MySQL extensions (mysqli, pdo_mysql)
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends \
+	   default-mysql-client \
+	   default-libmysqlclient-dev \
+	   libzip-dev \
+	   zlib1g-dev \
+	   libxml2-dev \
+	&& docker-php-ext-install mysqli pdo pdo_mysql \
+	&& rm -rf /var/lib/apt/lists/*
 
 # Enable Apache rewrite
 RUN a2enmod rewrite
