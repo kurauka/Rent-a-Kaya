@@ -3,7 +3,16 @@
 
 		$sql = 'SELECT * FROM posts';
 
-		$query = mysqli_query($connection, $sql);
+		// Ensure we have a valid mysqli connection before querying
+		$query = false;
+		if (!empty($connection)) {
+			$query = mysqli_query($connection, $sql);
+		} elseif (!empty($mysqli) && $mysqli instanceof mysqli) {
+			$query = $mysqli->query($sql);
+		} else {
+			// No DB connection available; leave $query as false and the page will show a friendly message
+			$query = false;
+		}
 ?>
 
 <!DOCTYPE html>
