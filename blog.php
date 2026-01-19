@@ -83,7 +83,7 @@
 		<h1 class="text-3xl font-bold mb-6">Blog</h1>
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 			<?php 
-				if (mysqli_num_rows($query)==0) {
+				if (!$query || mysqli_num_rows($query) == 0) {
 				  echo "<div class='col-span-3 text-center text-gray-600'>Sorry there are no posts Yet :( We will be uploading new content soon!</div>";
 				} else {
 					while ($row=mysqli_fetch_array($query)) {
