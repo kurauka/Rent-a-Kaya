@@ -1,0 +1,200 @@
+/* Kayarent theme tokens and basic components
+   Shared across public site and admin panel.
+*/
+/* Brand variables moved to css/brand.css */
+
+/* Typography */
+body, button, input, select, textarea { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+
+/* Cards */
+.kaya-card{
+  background: var(--kaya-card);
+  border-radius: var(--kaya-radius);
+  box-shadow: var(--kaya-shadow);
+    border: 1px solid rgba(13,69,44,0.04);
+}
+
+/* Sidebar adjustments for admin */
+.sidebar {
+  width: 250px;
+  /* solid background matching dashboard card color */
+  background: var(--kaya-card);
+  color: #0f172a;
+  min-height: 100vh;
+  border-right: 1px solid rgba(13,69,44,0.04);
+}
+/* make sidebar animate on collapse/expand and sit above page content */
+.sidebar{ transition: width .22s ease, transform .18s ease, box-shadow .18s ease; z-index:1040 }
+  .sidebar {
+    /* fixed on desktop below navbar */
+    position: fixed;
+    top: 64px;
+    left: 0;
+    height: calc(100vh - 64px);
+    overflow: auto;
+    transition: width .22s ease, transform .18s ease, box-shadow .18s ease;
+    z-index: 1040;
+  }
+.sidebar .sidebar-header { padding: 12px 16px; color: #0f172a; }
+.sidebar .user-pro { background: transparent; color: #0f172a; }
+.sidebar .user-pro a { color: var(--kaya-muted); text-decoration: none; }
+.sidebar .nav-link { color: #0f172a; text-decoration: none; border-radius:8px; background: transparent; }
+.sidebar .nav-link:hover, .sidebar .nav-link:focus { background: rgba(13,69,44,0.04); color: #000; }
+.kaya-icon { color: var(--kaya-primary); }
+
+/* collapsed sidebar support */
+body.sidebar-collapsed .sidebar { width: 72px; }
+body.sidebar-collapsed .sidebar .menu-label, body.sidebar-collapsed .sidebar .user-pro div { display:none; }
+body.sidebar-collapsed .sidebar img { margin-right:0; }
+
+/* small responsive tweaks: keep sidebar static on small screens */
+@media (max-width: 768px){
+  .sidebar { position:relative; z-index:1040; transform:none; transition:none; }
+  body.sidebar-open .sidebar { transform:none; }
+}
+  @media (max-width: 992px){
+    /* mobile / tablet: sidebar becomes off-canvas drawer */
+    .sidebar { position: fixed; top: 56px; left: 0; height: calc(100vh - 56px); transform: translateX(-110%); transition: transform .22s ease; z-index:1050 }
+    body.sidebar-open .sidebar { transform: translateX(0); }
+    /* backdrop shown when mobile drawer is open */
+    body.sidebar-open #kaya-sidebar-backdrop{ display:block; }
+    /* make page use full width when drawer open */
+    #page-wrapper{ margin-left:0 !important }
+  }
+
+  /* page wrapper adjusts to sidebar width on desktop */
+  #page-wrapper{ transition: margin-left .22s ease; margin-left:250px; }
+  body.sidebar-collapsed #page-wrapper{ margin-left:72px; }
+
+/* Tables, forms and buttons - consistent admin styling */
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.table th, .table td { padding: 12px 10px; border-bottom: 1px solid rgba(13,69,44,0.04); }
+.table thead th { background: transparent; color: #0f172a; font-weight:700; }
+.table tbody tr:hover { background: rgba(13,69,44,0.02); }
+
+.btn {
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 600;
+  border: 1px solid rgba(13,69,44,0.06);
+}
+.btn-primary { background: var(--kaya-primary); color: #fff; border-color: rgba(13,69,44,0.06); }
+.btn-secondary { background: #f1f5f9; color: #0f172a; }
+.btn-outline-primary { background: transparent; border: 1px solid var(--kaya-primary); color: var(--kaya-primary); }
+.btn-outline-danger { background: transparent; border: 1px solid var(--kaya-accent); color: var(--kaya-accent); }
+
+.form-control { border-radius:8px; border:1px solid rgba(13,69,44,0.06); padding:8px 10px; }
+.form-control:focus { outline: none; box-shadow: 0 6px 18px rgba(13,69,44,0.06); border-color: var(--kaya-primary-600); }
+
+/* Small helpers */
+.mb-3 { margin-bottom: 1rem; }
+.p-3 { padding: 1rem; }
+.g-3 { gap: 1rem; }
+.d-flex { display: flex; }
+.align-items-center { align-items: center; }
+.justify-content-between { justify-content: space-between; }
+.justify-content-end { justify-content: flex-end; }
+
+
+/* Buttons */
+.kaya-btn{
+  display:inline-block;padding:.6rem 1.1rem;border-radius:10px;font-weight:600;color:#fff;background:linear-gradient(90deg,var(--kaya-primary),var(--kaya-primary-600));border:none;box-shadow:0 8px 20px rgba(13,69,44,0.12);
+}
+.kaya-btn-muted{background:#F3F4F6;color:var(--kaya-muted);box-shadow:none}
+
+/* Stat card */
+.kaya-stat{display:flex;align-items:center;justify-content:space-between;padding:1rem}
+.kaya-stat .kaya-icon{font-size:32px;color:var(--kaya-primary)}
+.kaya-stat .kaya-number{font-weight:700;font-size:1.6rem;color:#0f172a}
+
+/* Small utilities */
+.kaya-section{background:transparent;padding:1.25rem}
+.kaya-muted{color:var(--kaya-muted)}
+.kaya-rounded-sm{border-radius:8px}
+
+/* Forms */
+.kaya-input{border:1px solid rgba(13,69,44,0.06);padding:.65rem .8rem;border-radius:8px}
+.kaya-input:focus{outline:0;box-shadow:0 0 0 4px rgba(13,69,44,0.06);border-color:var(--kaya-primary-600)}
+
+/* Header tweaks for admin */
+.top-left-part .logo b{font-size:18px;color:#fff}
+
+/* Fixed top navbar: stays at top and doesn't overlap page content */
+nav.navbar.navbar-default.navbar-static-top{
+  position:fixed;
+  top:0;left:0;right:0;width:100%;
+  z-index:1060;
+  background: inherit;
+  box-shadow: 0 2px 8px rgba(13,69,44,0.04);
+}
+
+/* Make room for the fixed navbar so content and sidebar are not under it */
+#wrapper{ padding-top:64px; }
+@media (max-width:992px){
+  #wrapper{ padding-top:56px; }
+}
+
+/* Responsive helpers kept minimal */
+@media (max-width:768px){
+  .kaya-stat{flex-direction:column;align-items:flex-start}
+}
+
+/* Sidebar details/summary and collapsed-tooltip enhancements */
+.sidebar details { margin-bottom:10px; }
+.sidebar summary { list-style:none; -webkit-user-select:none; user-select:none; }
+.sidebar summary::-webkit-details-marker { display: none; }
+.sidebar summary { position:relative; padding-right: 28px; }
+.sidebar summary::after { content:'\25BE'; position:absolute; right:12px; top:50%; transform:translateY(-50%); font-size:12px; opacity:0.8; transition:transform .18s ease; }
+.sidebar details[open] summary::after { transform:translateY(-50%) rotate(180deg); }
+
+/* tooltip when sidebar is collapsed */
+.sidebar .nav-link { position:relative; transition:background .12s ease, color .12s ease; }
+body.sidebar-collapsed .sidebar .menu-label { display:none !important; }
+body.sidebar-collapsed .sidebar .nav-link[data-label]:hover::after,
+body.sidebar-collapsed .sidebar summary[data-label]:hover::after {
+  content: attr(data-label);
+  position:fixed;
+  left:74px;
+  top: calc(50% - 12px);
+  background: var(--kaya-primary);
+  color: #fff;
+  padding:6px 10px;
+  border-radius:6px;
+  white-space:nowrap;
+  box-shadow: 0 6px 18px rgba(13,69,44,0.12);
+  z-index: 1100;
+}
+
+/* Visual polish for sidebar items */
+.sidebar .nav-link.kaya-card { background:transparent; border:0; padding:10px 12px; }
+.sidebar .nav-link.kaya-card .menu-label { color:#e6eef2; }
+.sidebar .nav-link.kaya-card:hover { transform: translateX(2px); }
+
+/* Make sidebar items look like white cards with a blue accent */
+.sidebar .nav-link.kaya-card{
+  background: rgba(255,255,255,0.98);
+  color: #041025;
+  margin: 12px 10px;
+  padding: 18px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(13,69,44,0.04);
+  box-shadow: 0 8px 22px rgba(13,69,44,0.04);
+}
+.sidebar .nav-link.kaya-card i{ color: var(--kaya-primary); font-size:18px }
+.sidebar .nav-link.kaya-card .menu-label{ color:#041025; font-weight:700 }
+.sidebar .nav-link.kaya-card:hover{ background: #fff; box-shadow: 0 12px 36px rgba(13,69,44,0.06); transform: none }
+
+/* Active/selected indicator (left accent) */
+.sidebar .nav-link.kaya-card.active{ box-shadow: 0 12px 36px rgba(13,69,44,0.06); border-left:4px solid var(--kaya-primary); }
+
+/* Collapsed state: keep icon visible and remove card background */
+body.sidebar-collapsed .sidebar .nav-link.kaya-card{ background:transparent; box-shadow:none; border-left:0; margin:6px 4px; padding:10px }
+body.sidebar-collapsed .sidebar .nav-link.kaya-card i{ color: var(--kaya-primary); }
+
+/* Dashboard stat items padding increase for better spacing */
+.modern-stats .kaya-card, .kaya-stat { padding: 1.5rem; }
+
+

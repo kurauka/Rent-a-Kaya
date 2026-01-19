@@ -1,0 +1,28 @@
+# PHP project
+/.env
+/.env.local
+/.env.*.local
+/.idea/
+.vscode/
+vendor/
+node_modules/
+composer.lock
+npm-debug.log
+yarn-error.log
+logs/
+*.log
+*.cache
+uploads/
+tmp/
+*.sql
+database/*.sql
+
+# Ignore local configuration files that may contain credentials
+/functions/env.php
+
+# OS files
+.DS_Store
+Thumbs.db.env
+.DS_Store
+node_modules/
+vendor/

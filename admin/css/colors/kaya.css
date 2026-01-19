@@ -1,0 +1,133 @@
+/* Kaya admin color overrides — maps admin theme tokens to site brand variables */
+/* Uses variables from ../../css/brand.css (loaded before this file) */
+:root{
+  /* fallback in case brand.css not loaded */
+  --kaya-primary: #0D452C;
+  --kaya-accent: #A7634E;
+  --kaya-on-primary: #FFFFFF;
+}
+
+body { background: #fff; }
+
+/* Top Header Part */
+.top-left-part { background: rgba(13,69,44,0.06); }
+.logo i { color: var(--kaya-on-primary); }
+.navbar-header { background: var(--kaya-accent); }
+.navbar-top-links > li > a { color: var(--kaya-on-primary); }
+
+/* Right panel */
+.right-sidebar .rpanel-title { background: var(--kaya-accent); }
+
+/* Bread Crumb */
+.bg-title .breadcrumb .active { color: var(--kaya-accent); }
+
+/* Sidebar */
+.sidebar { background: #fff; box-shadow: 1px 0px 20px rgba(0,0,0,0.06); }
+.sidebar .label-custom { background: var(--kaya-primary); }
+#side-menu li a { color: #54667a; }
+#side-menu > li > a.active { border-left: 3px solid var(--kaya-primary); color: #2b2b2b; font-weight: 500; }
+#side-menu > li > a.active i { color: var(--kaya-primary); }
+#side-menu ul > li > a:hover { color: var(--kaya-primary); }
+#side-menu ul > li > a.active { color: #2b2b2b; font-weight: 500; }
+.sidebar #side-menu .user-pro .nav-second-level a:hover { color: var(--kaya-primary); }
+.fix-sidebar .top-left-part { background: var(--kaya-accent); }
+
+/* Theme color helpers */
+.bg-theme { background-color: var(--kaya-accent) !important; }
+.bg-theme-dark { background-color: var(--kaya-primary) !important; }
+
+/* Chat widget */
+.chat-list .odd .chat-text { background: var(--kaya-accent); }
+
+/* Buttons */
+.btn-custom { background: var(--kaya-accent); border: 1px solid var(--kaya-accent); color: var(--kaya-on-primary); }
+.btn-custom:hover { background: var(--kaya-accent); opacity: 0.95; color: var(--kaya-on-primary); border: 1px solid var(--kaya-accent); }
+
+/* Tabs */
+.customtab li.active a, .customtab li.active a:hover, .customtab li.active a:focus { border-bottom: 2px solid var(--kaya-accent); color: var(--kaya-accent); }
+.tabs-vertical li.active a, .tabs-vertical li.active a:hover, .tabs-vertical li.active a:focus { background: var(--kaya-accent); border-right: 2px solid var(--kaya-accent); }
+
+/* Nav pills */
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover { background: var(--kaya-accent); color: var(--kaya-on-primary); }
+
+/* Small helpers */
+.bg-title .breadcrumb .active { color: var(--kaya-accent); }
+
+/* Ensure contrasts for white text uses the on-primary token */
+.text-on-primary { color: var(--kaya-on-primary) !important; }
+
+/* Any other admin theme elements can be added here as overrides */
+
+/* Global header colors: make headings use the brand primary */
+h1, h2, h3, h4, h5, h6, .page-title, .panel-title {
+  color: var(--kaya-primary) !important;
+}
+
+/* Links: use accent for links, primary on hover for contrast */
+a, a:visited, .sidebar a, #side-menu li a {
+  color: var(--kaya-accent) !important;
+}
+a:hover, a:focus, .sidebar a:hover, #side-menu li a:hover {
+  color: var(--kaya-primary) !important;
+  text-decoration: underline;
+}
+
+/* Buttons: make primary buttons use the accent color */
+.btn, button, input[type="button"], input[type="submit"], .btn-custom, .btn-primary {
+  background-color: var(--kaya-accent) !important;
+  border-color: var(--kaya-accent) !important;
+  color: var(--kaya-on-primary) !important;
+  box-shadow: none !important;
+}
+.btn:hover, .btn:focus, button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+  background-color: var(--kaya-primary) !important;
+  border-color: var(--kaya-primary) !important;
+  color: var(--kaya-on-primary) !important;
+}
+
+/* Ensure all common bootstrap button variants use the accent color in admin */
+.btn-default, .btn-info, .btn-success, .btn-warning, .btn-danger,
+.open .dropdown-toggle.btn, .navbar .btn, .navbar-btn {
+  background-color: var(--kaya-accent) !important;
+  border-color: var(--kaya-accent) !important;
+  color: var(--kaya-on-primary) !important;
+}
+.btn-default:hover, .btn-info:hover, .btn-success:hover, .btn-warning:hover, .btn-danger:hover,
+.navbar .btn:hover, .navbar-btn:hover {
+  background-color: var(--kaya-primary) !important;
+  border-color: var(--kaya-primary) !important;
+  color: var(--kaya-on-primary) !important;
+}
+
+/* Text-only button/link variants should use accent for text */
+.btn-link, .btn-link:visited {
+  color: var(--kaya-accent) !important;
+  background: transparent !important;
+  border: none !important;
+}
+.btn-link:hover {
+  color: var(--kaya-primary) !important;
+  text-decoration: underline !important;
+}
+
+/* Mobile toggle and small icon buttons */
+.navbar-default .navbar-toggle, .kaya-sidebar-toggle {
+  background-color: var(--kaya-accent) !important;
+  border-color: var(--kaya-accent) !important;
+  color: var(--kaya-on-primary) !important;
+}
+
+/* Ensure small controls and links inside panels follow the brand */
+.panel .panel-heading a, .panel a {
+  color: var(--kaya-accent) !important;
+}
+
+/* Dashboard header (row.bg-title) should use the brand accent */
+.bg-title {
+  background-color: var(--kaya-accent) !important;
+  color: var(--kaya-on-primary) !important;
+}
+.bg-title .breadcrumb, .bg-title .breadcrumb li a {
+  color: var(--kaya-on-primary) !important;
+}
+.bg-title .breadcrumb li a:hover { text-decoration: underline; }

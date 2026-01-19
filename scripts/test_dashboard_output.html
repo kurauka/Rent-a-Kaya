@@ -1,0 +1,385 @@
+
+Notice: session_start(): Ignoring session_start() because a session is already active (started from /var/www/html/rent-a-kaya/scripts/test_dashboard_cli.php on line 7) in /var/www/html/rent-a-kaya/client/dashboard.php on line 2
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/icon.png">
+    <title>Client Dashboard - Rent-a-Kaya</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="../admin/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../plugins/bower_components/bootstrap-extension/css/bootstrap-extension.css" rel="stylesheet">
+    <link href="../plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <!--w3css-->
+    <link href="../css/w3.css" rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href="../plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <!-- toast CSS -->
+    <link href="../plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <!-- animation CSS -->
+    <link href="../admin/css/animate.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../admin/css/style.css" rel="stylesheet">
+    <!-- color CSS -->
+    <link href="../admin/css/colors/blue.css" id="theme" rel="stylesheet">
+    <!-- Kayarent shared theme -->
+    <link href="../css/kayarent-theme.css" rel="stylesheet">
+    <!-- Client-specific overrides -->
+    <link href="../client/css/client-style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="wrapper">
+        <!-- Navigation (shared look) -->
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header">
+                <div class="top-left-part"><a class="logo" href="../client/dashboard.php"><b><img src="../plugins/images/icon.png" style="width: 30px; height: 30px;" alt="home" /></b><span class="hidden-xs"><b>RentaKaya</b></span></a></div>
+                <button id="kaya-sidebar-toggle" class="btn btn-link visible-xs visible-sm" aria-label="Toggle sidebar" title="Toggle sidebar" style="border:0;background:transparent;color:inherit;margin-left:8px"><i class="ti-menu"></i></button>
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    <li class="right-side-toggle"> <a class="waves-effect waves-light" href="javascript:void(0)"><i class="ti-settings"></i></a></li>
+                </ul>
+            </div>
+        </nav>
+        <script>
+        (function(){
+            var btn = document.getElementById('kaya-sidebar-toggle');
+            if(btn){ btn.addEventListener('click', function(e){ e.preventDefault(); if(window.matchMedia('(max-width: 992px)').matches){ document.body.classList.toggle('sidebar-open'); } else { document.body.classList.toggle('sidebar-collapsed'); } }, {passive:false}); }
+        })();
+        </script>
+
+                <!-- client pages should include a sidebar separately (client_left_panel.php) -->
+
+?>
+<script>
+// Client-side dynamic loader: sidebar links load pages into the main wrapper
+(function(){
+    function ajaxLoad(url, push){
+        fetch(url, {headers:{'X-Requested-With':'XMLHttpRequest'}}).then(function(res){
+            if(!res.ok) throw new Error('Network error');
+            return res.text();
+        }).then(function(html){
+            var wrapper = document.getElementById('page-wrapper');
+            if(wrapper){ wrapper.outerHTML = html; }
+            else { document.body.insertAdjacentHTML('beforeend', html); }
+            if(push!==false) history.pushState({url:url}, '', url);
+            window.scrollTo(0,0);
+            if(window.initClientPage) try{ window.initClientPage(); }catch(e){}
+        }).catch(function(err){ console.error(err); window.location.href = url; });
+    }
+
+    document.addEventListener('click', function(e){
+        var a = e.target.closest && e.target.closest('#client-side-menu a');
+        if(!a) return;
+        var href = a.getAttribute('href');
+        if(!href) return;
+        if(href.indexOf('http')===0 && href.indexOf(location.origin)!==0) return;
+        e.preventDefault();
+        ajaxLoad(href, true);
+    }, true);
+
+    window.addEventListener('popstate', function(e){ if(e.state && e.state.url) ajaxLoad(e.state.url, false); });
+
+})();
+</script>
+// default page initializer (will be called after AJAX load)
+<script>
+if(!window.initClientPage) window.initClientPage = function(){
+    try {
+        if(window.jQuery && jQuery().DataTable) {
+            jQuery('table.table').each(function(){ if(!jQuery(this).hasClass('dataTable')) jQuery(this).DataTable({responsive:true}); });
+        }
+    } catch(e){ /* ignore */ }
+};
+</script>
+
+<!-- Client left panel (read-only) -->
+<aside class="navbar-default sidebar kaya-card" role="navigation" aria-label="Client sidebar">
+    <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+        <div class="p-4 user-pro" style="border-bottom:1px solid rgba(2,24,54,0.04);">
+            <div style="display:flex;align-items:center;gap:10px">
+                <img src="../plugins/images/user.jpg" alt="user-img" class="img-circle" style="width:44px;height:44px;border-radius:8px;object-fit:cover">
+                <div>
+                    <div style="font-weight:600;color:#0f172a">Demo Tenant</div>
+                    <a href="profile.php" style="font-size:12px;color:var(--kaya-muted)">Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <nav class="p-3" role="navigation">
+            <ul class="nav flex-column" id="client-side-menu">
+                <li class="nav-item mb-2">
+                    <a class="nav-link kaya-card" href="dashboard.php" style="display:flex;align-items:center;gap:12px;padding:12px;position:relative">
+                        <i class="fa fa-tachometer kaya-icon" aria-hidden="true" style="width:24px;text-align:center"></i>
+                        <span class="menu-label">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item mb-2">
+                    <a class="nav-link kaya-card" href="invoices.php" style="display:flex;align-items:center;gap:12px;padding:12px;position:relative">
+                        <i class="fa fa-credit-card" aria-hidden="true" style="width:24px;text-align:center"></i>
+                        <span>Invoices</span>
+                    </a>
+                </li>
+
+                <li class="nav-item mb-2">
+                    <a class="nav-link kaya-card" href="payment.php" style="display:flex;align-items:center;gap:12px;padding:12px;position:relative">
+                        <i class="fa fa-money" aria-hidden="true" style="width:24px;text-align:center"></i>
+                        <span>Payments</span>
+                    </a>
+                </li>
+
+                <li class="nav-item mb-2"><a class="nav-link kaya-card" href="inbox.php" style="display:flex;align-items:center;gap:12px;padding:12px;position:relative"><i class="fa fa-envelope" style="width:24px;text-align:center"></i><span>Messages</span></a></li>
+
+                <li class="nav-item mb-2"><a class="nav-link kaya-card" href="notices.php" style="display:flex;align-items:center;gap:12px;padding:12px;position:relative"><i class="fa fa-newspaper-o" style="width:24px;text-align:center"></i><span>Notices</span></a></li>
+
+                <li class="nav-item mt-3"><a class="nav-link kaya-card" href="logout.php" style="display:flex;align-items:center;gap:12px;padding:12px;position:relative"><i class="fa fa-sign-out" style="width:24px;text-align:center"></i><span>Log out</span></a></li>
+            </ul>
+        </nav>
+    </div>
+</aside>
+<div id="page-wrapper">
+  <div class="container-fluid">
+      <div class="row">
+        <aside class="col-md-3">
+          <div class="kaya-card p-3">
+            <h5>Client</h5>
+            <div class="kaya-muted">House: -</div>
+            <div class="mt-3"><a href="logout.php" class="btn btn-outline-secondary">Logout</a></div>
+          </div>
+        </aside>
+        <main class="col-md-9 dash-wrap">
+          <h3>Welcome, Demo Tenant</h3>
+          <div class="summary-cards">
+            <div class="row g-3 modern-stats">
+              <div class="col-lg-3 col-md-6">
+                <div class="kaya-card p-3 d-flex align-items-center" style="gap:12px">
+                  <div style="font-size:32px;color:var(--kaya-primary)"><i class="fa fa-money" aria-hidden="true"></i></div>
+                  <div style="flex:1">
+                    <div class="kaya-muted" style="font-size:12px">Total paid</div>
+                    <div style="font-weight:700;font-size:20px">KES 4,000.00</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6">
+                <div class="kaya-card p-3 d-flex align-items-center" style="gap:12px">
+                  <div style="font-size:32px;color:#EF4444"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
+                  <div style="flex:1">
+                    <div class="kaya-muted" style="font-size:12px">Outstanding invoices</div>
+                    <div style="font-weight:700;font-size:20px">KES 9,000.00 <small>(2)</small></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6">
+                <div class="kaya-card p-3 d-flex align-items-center" style="gap:12px">
+                  <div style="font-size:32px;color:#06A7FF"><i class="fa fa-list" aria-hidden="true"></i></div>
+                  <div style="flex:1">
+                    <div class="kaya-muted" style="font-size:12px">Recent payments</div>
+                    <div style="font-weight:700;font-size:20px">2 <div style="font-size:12px;color:var(--kaya-muted)">entries</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-6">
+                <div class="kaya-card p-3 d-flex align-items-center" style="gap:12px">
+                  <div style="font-size:32px;color:#F59E0B"><i class="fa fa-tasks" aria-hidden="true"></i></div>
+                  <div style="flex:1">
+                    <div class="kaya-muted" style="font-size:12px">Utility bills</div>
+                    <div style="font-weight:700;font-size:20px">2 <div style="font-size:12px;color:var(--kaya-muted)">items</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-md-7">
+              <h4>Recent payments</h4>
+              <table class="table">
+                <thead><tr><th>Ref</th><th>Amount</th><th>Method</th><th>Date</th></tr></thead>
+                <tbody>
+                                      <tr>
+                      <td>RCPT-1001</td>
+                      <td>KES 2,500.00</td>
+                      <td>mpesa</td>
+                      <td>2025-12-01 10:12:00</td>
+                    </tr>
+                                      <tr>
+                      <td>RCPT-1002</td>
+                      <td>KES 1,500.00</td>
+                      <td>cash</td>
+                      <td>2025-11-18 14:05:00</td>
+                    </tr>
+                                  </tbody>
+              </table>
+            </div>
+
+            <div class="col-md-5">
+              <h4>Outstanding invoices</h4>
+                                                <div class="kaya-card p-3 mb-2">
+                    <div style="font-weight:700">Monthly rent (Dec 2025)</div>
+                    <div class="kaya-muted">Due: 2025-12-10 — KES 7,000.00</div>
+                  </div>
+                                  <div class="kaya-card p-3 mb-2">
+                    <div style="font-weight:700">Maintenance</div>
+                    <div class="kaya-muted">Due: 2025-12-20 — KES 2,000.00</div>
+                  </div>
+                              
+              <h5 class="mt-3">Utility bills</h5>
+                              <div class="kaya-card p-2 mb-2">
+                  <div style="font-weight:600">WATER — KES 450.00</div>
+                  <div class="kaya-muted">Period: 2025-11</div>
+                </div>
+                              <div class="kaya-card p-2 mb-2">
+                  <div style="font-weight:600">ELECTRICITY — KES 1,200.00</div>
+                  <div class="kaya-muted">Period: 2025-11</div>
+                </div>
+                          </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <h4>Messages</h4>
+                              <div class="kaya-card p-2 mb-2">
+                  <div style="font-weight:700">Rent reminder</div>
+                  <div class="kaya-muted small">2025-11-30</div>
+                  <div>Your December rent is due on 10th Dec.</div>
+                </div>
+                              <div class="kaya-card p-2 mb-2">
+                  <div style="font-weight:700">Water shutdown</div>
+                  <div class="kaya-muted small">2025-11-25</div>
+                  <div>Water supply will be interrupted on 5th Dec.</div>
+                </div>
+                          </div>
+            <div class="col-md-6">
+              <h4>Blog / Notices</h4>
+                              <div class="kaya-card p-2 mb-2">
+                  <div style="font-weight:700">Welcome tenants</div>
+                  <div class="kaya-muted small">2025-10-01</div>
+                </div>
+                              <div class="kaya-card p-2 mb-2">
+                  <div style="font-weight:700">Holiday schedule</div>
+                  <div class="kaya-muted small">2025-12-01</div>
+                </div>
+                          </div>
+          </div>
+
+          <div class="mt-3">
+            <a class="btn btn-primary" href="#">Make a payment</a>
+            <a class="btn btn-outline-secondary" href="#">Download receipt</a>
+          </div>
+        </main>
+      </div>
+      </div>
+    </div>
+  <!-- /.container-fluid -->
+            <footer class="footer text-center"> 2025 &copy; Rent-a-Kaya Homes </footer>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- Jquery Cookie Handler -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <!-- jQuery -->
+    <script src="/rent-a-kaya/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/rent-a-kaya/admin/bootstrap/dist/js/tether.min.js"></script>
+    <script src="/rent-a-kaya/admin/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/rent-a-kaya/plugins/bower_components/bootstrap-extension/js/bootstrap-extension.min.js"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="/rent-a-kaya/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+    <!--slimscroll JavaScript -->
+    <script src="/rent-a-kaya/admin/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="/rent-a-kaya/admin/js/waves.js"></script>
+    <!--Counter js -->
+    <script src="/rent-a-kaya/plugins/bower_components/waypoints/lib/jquery.waypoints.js"></script>
+    <script src="/rent-a-kaya/plugins/bower_components/counterup/jquery.counterup.min.js"></script>
+    <!--Morris JavaScript -->
+    <script src="/rent-a-kaya/plugins/bower_components/raphael/raphael-min.js"></script>
+    <script src="/rent-a-kaya/plugins/bower_components/morrisjs/morris.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="/rent-a-kaya/admin/js/custom.min.js"></script>
+    <script src="/rent-a-kaya/admin/js/dashboard1.js"></script>
+    <!-- for tables-->
+     <script src="/rent-a-kaya/plugins/bower_components/datatables/jquery.dataTables.min.js"></script>
+    <!-- start - This is for export functionality only -->
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <!-- end - This is for export functionality only -->
+    <!-- Sparkline chart JavaScript -->
+    <script src="../plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script src="../plugins/bower_components/jquery-sparkline/jquery.charts-sparkline.js"></script>
+    <script src="../plugins/bower_components/toast-master/js/jquery.toast.js"></script>
+
+    <script>
+      // small helper used by theme script
+      if (typeof window.get !== 'function') {
+        window.get = function(key){ try { return localStorage.getItem(key); } catch(e){ return null; } };
+      }
+    </script>
+
+    <script type="text/javascript">
+          // Theme color settings
+$(document).ready(function(){
+function store(name, val) {
+    if (typeof (Storage) !== "undefined") {
+      localStorage.setItem(name, val);
+    } else {
+      window.alert('Please use a modern browser to properly view this template!');
+    }
+  }
+ $("*[theme]").click(function(e){
+      e.preventDefault();
+        var currentStyle = $(this).attr('theme');
+
+        Cookies.set('themeselection', currentStyle, { expires: 30 });
+        store('theme', currentStyle);
+        var themeselected= Cookies.get('themeselection');
+        $('#theme').attr({href: 'css/colors/'+themeselected+'.css'})
+    });
+
+    var currentTheme = get('theme');
+    if(currentTheme)
+    {
+      $('#theme').attr({href: 'css/colors/'+currentTheme+'.css'});
+    }
+    // color selector
+    $('#themecolors').on('click', 'a', function(){
+        $('#themecolors li a').removeClass('working');
+        $(this).addClass('working')
+      });
+
+});
+
+$(document).ready(function(){
+    $("*[theme]").click(function(e){
+      e.preventDefault();
+        var currentStyle = Cookies.get('themeselection');
+        store('theme', currentStyle);
+        $('#theme').attr({href: 'css/colors/'+currentStyle+'.css'})
+    });
+
+    var currentTheme = Cookies.get('themeselection');
+    if(currentTheme)
+    {
+      $('#theme').attr({href: 'css/colors/'+currentTheme+'.css'});
+    }
+    // color selector
+$('#themecolors').on('click', 'a', function(){
+        $('#themecolors li a').removeClass('working');
+        $(this).addClass('working')
+      });
+});
+    </script>

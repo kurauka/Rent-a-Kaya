@@ -1,0 +1,86 @@
+/* Modern login page overrides for admin/login.php */
+/* Light, clean card, centered vertically and horizontally */
+html,body{
+  height:100%;
+}
+body{
+  background: linear-gradient(135deg,#f6f9fc 0%, #e9f2fb 100%);
+  font-family: 'Open Sans', Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.login-wrapper{
+  min-height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 16px;
+}
+
+.login-card{
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(18,34,63,0.08);
+  padding:28px 28px;
+  border:1px solid rgba(18,34,63,0.04);
+}
+
+.login-brand{
+  text-align:center;
+  margin-bottom:18px;
+}
+.login-brand img{max-height:56px}
+.login-title{
+  font-size:20px;
+  font-weight:600;
+  color:#12223f;
+  margin:0 0 8px;
+}
+.login-subtitle{
+  color:#5f6b7a;
+  font-size:13px;
+  margin-bottom:18px;
+}
+
+.form-control{
+  height:48px;
+  border-radius:8px;
+  border:1px solid rgba(18,34,63,0.08);
+  box-shadow:none;
+  padding:12px 14px;
+}
+.form-control:focus{
+  border-color:#03a9f3;
+  box-shadow:0 0 0 3px rgba(3,169,243,0.08);
+}
+
+.btn-primary{
+  background:linear-gradient(90deg,#03a9f3,#0288d1);
+  border:none;
+  height:48px;
+  border-radius:8px;
+  font-weight:600;
+  box-shadow:0 8px 24px rgba(2,136,209,0.12);
+}
+
+.input-group-icon{position:relative}
+.input-group-icon .fa{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#9aa4b2}
+.input-group-icon input{padding-left:40px}
+
+.alert-error{
+  background:#fff6f6;
+  border:1px solid #ffd6d6;
+  color:#9a2b2b;
+  padding:10px 12px;
+  border-radius:8px;
+  margin-bottom:12px;
+}
+
+.footer-note{font-size:12px;color:#9aa4b2;text-align:center;margin-top:16px}
+
+@media (max-width:480px){
+  .login-card{padding:20px}
+}

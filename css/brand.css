@@ -1,0 +1,17 @@
+/* Brand variables for Rent-a-Kaya
+   Generated: 2025-12-15
+   Palette: #0D452C (primary), #A7634E (accent), #FFFFFF (white)
+*/
+:root{
+  --kaya-bg: #FFFFFF;
+  --kaya-card: #FFFFFF;
+  --kaya-muted: #6B7280;
+  --kaya-primary: #0D452C; /* dark green */
+  --kaya-primary-600: #0A351F; /* darker green */
+  --kaya-accent: #A7634E; /* warm accent */
+  --kaya-text: #0f172a; /* default body text */
+  --kaya-on-primary: #FFFFFF; /* text on primary backgrounds */
+  --kaya-success: #10B981;
+  --kaya-radius: 12px;
+  --kaya-shadow: 0 8px 24px rgba(13,69,44,0.06);
+}
