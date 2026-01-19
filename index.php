@@ -54,9 +54,9 @@
 				<div class="flex items-center gap-4">
 					<img src="images/mainlogo.png" alt="Logo" class="w-28 h-auto object-contain">
 					<div class="hidden sm:flex items-center gap-3 text-sm text-gray-600">
-						<span class="flex items-center gap-2"><i class="fa-solid fa-phone fa-fw text-[#A7634E]"></i> +(254) 123 456 789</span>
+					
 						<span class="text-gray-300">&middot;</span>
-						<a class="text-[#A7634E] flex items-center gap-2" href="mailto:info@rent-a-kaya.com"><i class="fa-regular fa-envelope fa-fw"></i> info@rent-a-kaya.com</a>
+						<div class="hidden sm:block text-sm text-gray-5">Call us: +(254) 123 456 789 &middot; <a class="text-[#A7634E]" href="mailto:info@rent-a-kaya.com">info@rent-a-kaya.com</a></div>
 					</div>
 				</div>
 				<nav class="hidden md:flex items-center gap-4 text-sm font-medium">
