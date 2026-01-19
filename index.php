@@ -4,7 +4,7 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>KayaRent — Rent-a-Kaya homes</title>
-	<link rel="icon" href="images/mainilogo.png">
+	<link rel="icon" href="images/mainlogo.png">
 	<script src="https://cdn.tailwindcss.com"></script>
 	<script>
 		tailwind.config = {
@@ -82,7 +82,7 @@
 					</div>
 				</div>
 				<div class="rounded-2xl overflow-hidden shadow-lg">
-					<img src="images/logo2.png" alt="Hero" class="w-full h-72 object-cover">
+					<img src="images/banner.jpg" alt="Hero banner" class="w-full h-72 object-cover">
 				</div>
 			</div>
 		</header>
