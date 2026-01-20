@@ -10,6 +10,12 @@ function is_admin_logged_in(){
 }
 
 function require_admin(){
+    // Allow temporary bypass when DISABLE_ADMIN_AUTH is set in environment (value '1' or 'true')
+    $disable = getenv('DISABLE_ADMIN_AUTH');
+    if (!empty($disable) && (strval($disable) === '1' || strtolower(strval($disable)) === 'true')) {
+        return true;
+    }
+
     if (!is_admin_logged_in()){
         // redirect to admin login
         header('Location: /rent-a-kaya/admin/login.php');
